@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	Schedule New Trip
+{% endblock %}
+
+
+{% block extra_css %}
+  <link href="{{url_for('static', filename='libs/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+
+      <link href="{{url_for('static', filename='libs/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/normalize-css/normalize.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/ion.rangeSlider/css/ion.rangeSlider.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')}}" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block page_content %}
+	        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>New Trip<small> Schedule new trip</small></h2>
+                    <a href="{{url_for('main.trips')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Back </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+                    
+                    <form action="" method="post" class="form-horizontal form-label-left">
+                    {{ form.csrf_token }}
+                    
+
+                    <div class="form-group {% if form.trip_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trip_date">{{ form.trip_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker1'>
+                        {{ form.trip_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if form.route.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.route.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.route(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.route.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.route.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group {% if form.grader.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-grader">{{ form.grader.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.grader(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.grader.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.grader.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="form-group {% if form.vehicle.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-make">{{ form.vehicle.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.vehicle(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.vehicle.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.vehicle.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button class="btn btn-primary" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{{url_for('static', filename='libs/moment/min/moment.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/ion.rangeSlider/js/ion.rangeSlider.min.js')}}"></script>
+
+    <script type="text/javascript">
+            $(function () {
+                var date = new Date();
+                // date.setDate(date.getDate()-1);
+                $('#datetimepicker1').datetimepicker({
+                  "minDate": date
+                });
+            });
+        </script>
+
+
+{% endblock %}

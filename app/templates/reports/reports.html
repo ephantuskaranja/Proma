@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+  Reports Home
+{% endblock %}
+
+{% block extra_css %}
+  <link href="{{url_for('static', filename='libs/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+
+      <link href="{{url_for('static', filename='libs/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/normalize-css/normalize.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/ion.rangeSlider/css/ion.rangeSlider.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='libs/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')}}" rel="stylesheet">
+
+
+{% endblock %}
+
+
+
+{% block page_content %}
+      <div class="right_col" role="main">
+          <div class="">
+
+          <div class="page-title">
+              <div class="title_left">
+                <h3>HCF Reports Portal</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>Collections Per Grader</h2>
+                    <a href="{{url_for('reports.home')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Refresh </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+                    
+                    <form action="{{url_for('.collection_per_grader')}}" method="post" class="form-horizontal form-label-left">
+                    {{ collection_per_grader_form.csrf_token }}
+                    
+
+
+                    <div class="form-group {% if collection_per_grader_form.grader.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.grader.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ collection_per_grader_form.grader(class_="form-control col-md-7 col-xs-12") }}
+                         {% if collection_per_grader_form.grader.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ collection_per_grader_form.grader.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group {% if collection_per_grader_form.start_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.start_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker1'>
+                        {{ collection_per_grader_form.start_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if collection_per_grader_form.end_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.end_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker2'>
+                        {{ collection_per_grader_form.end_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Generate</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>Grader Cummulative Variance Report</h2>
+                    <a href="{{url_for('reports.home')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Refresh </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+
+                    
+                    <form action="{{url_for('.grader_variance')}}" method="post" class="form-horizontal form-label-left">
+                    {{ collection_per_grader_form.csrf_token }}
+
+
+                    <div class="form-group {% if collection_per_grader_form.start_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.start_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker3'>
+                        {{ collection_per_grader_form.start_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if collection_per_grader_form.end_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.end_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker4'>
+                        {{ collection_per_grader_form.end_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Generate</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>Cummulative Collections per supplier<small> </small></h2>
+                    <a href="{{url_for('reports.home')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Refresh </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+
+                    
+                    <form action="{{url_for('.cumm_farmer')}}" method="post" class="form-horizontal form-label-left">
+                    {{ collection_per_grader_form.csrf_token }}
+
+
+                    <div class="form-group {% if collection_per_grader_form.start_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.start_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker5'>
+                        {{ collection_per_grader_form.start_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if collection_per_grader_form.end_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.end_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker6'>
+                        {{ collection_per_grader_form.end_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Generate</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+
+<!--               <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>Cummulative Collections per route<small> </small></h2>
+                    <a href="{{url_for('reports.home')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Refresh </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+
+                    
+                    <form action="{{url_for('.cumm_route')}}" method="post" class="form-horizontal form-label-left">
+                    {{ collection_per_grader_form.csrf_token }}
+
+
+                    <div class="form-group {% if collection_per_grader_form.start_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.start_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker7'>
+                        {{ collection_per_grader_form.start_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if collection_per_grader_form.end_date.errors %} has-error {% endif %}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ collection_per_grader_form.end_date.label }} <span class="required">*</span></label>
+                      <div class='input-group date col-md-6 col-sm-6 col-xs-12' id='datetimepicker8'>
+                        {{ collection_per_grader_form.end_date(class_="form-control col-md-7 col-xs-12") }}
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Generate</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div> -->
+
+
+
+            </div>
+
+
+
+          </div>
+        </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{{url_for('static', filename='libs/moment/min/moment.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/ion.rangeSlider/js/ion.rangeSlider.min.js')}}"></script>
+
+    <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker2').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker3').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker4').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker5').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker6').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker7').datetimepicker();
+            });
+            $(function () {
+                $('#datetimepicker8').datetimepicker();
+            });
+        </script>
+
+
+{% endblock %}

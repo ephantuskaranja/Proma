@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="right_col" role="main">
+	<div class="">
+		<div class="row top_tiles">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats  panel panel-primary">
+                  <div class="icon"><i class="fa fa-group"></i></div>
+                  <div class="count label label-success">&nbsp;{{farmers_count}} &nbsp;</div>
+                  <h3 class="">Farmers</h3>
+                  <p>Total Number of farmers.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-user"></i></div>
+                  <div class="count label label-warning">&nbsp;{{graders_count}} &nbsp;</div>
+                  <h3>Graders</h3>
+                  <p>Total Number of graders.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-arrows-alt"></i></div>
+                  <div class="count label label-primary">&nbsp;{{routes_count}} &nbsp;</div>
+                  <h3>Routes</h3>
+                  <p>Total Number of routes</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-universitys"></i></div>
+                  <div class="count label label-danger">&nbsp;{{centre_count}} &nbsp;</div>
+                  <h3>Centres</h3>
+                  <p>Total number of centres</p>
+                </div>
+              </div>
+            </div>
+
+            
+	</div>
+</div>
+{% endblock %}

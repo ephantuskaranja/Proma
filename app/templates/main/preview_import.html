@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	Farmers
+{% endblock %}
+
+
+{% block extra_css %}
+	<link href="{{url_for('static', filename='libs/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+	        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Preview Farmers<small>Preview farmers before saving to the database. Incase of an issue ammend your original csv and upload again</small></h2>
+                    <a href="{{url_for('main.save_upload', file=csv_file)}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Looks Good, Save</a>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  <p>
+                  	{% with messages = get_flashed_messages(with_categories=true)  %}
+
+            {% if messages %}
+
+              {% for type, message in messages %}
+
+                  <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                     {{message}}.
+                  </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+          {% endwith %}
+                  </p>
+                  {% if data %}
+                  	<table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Supplier No</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>ID No</th>
+                          <th>Phone No</th>
+                          <th>Centre</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                  {% for farmer in data %}
+                  	<tr>
+                          <td>{{farmer.supplier_no}}</td>
+                          <td>{{farmer.first_name}}</td>
+                          <td>{{farmer.last_name}}</td>
+                          <td>{{farmer.id_number}}</td>
+                          <td>{{farmer.phone_number}}</td>
+                          <td>{{farmer.centre}}</td>
+                        </tr>
+                  {% endfor %}
+
+                   </tbody>
+                    </table>
+                  	
+                  {% endif %}
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{{url_for('static', filename='libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/jszip/dist/jszip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/pdfmake/build/pdfmake.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/pdfmake/build/vfs_fonts.js')}}"></script>
+{% endblock %}

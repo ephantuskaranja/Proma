@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	New Centre
+{% endblock %}
+
+
+{% block page_content %}
+	        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>New Farmer<small> Add new farmer</small></h2>
+                    <a href="{{url_for('main.farmers')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Back </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+                  <p>
+                    {% with messages = get_flashed_messages(with_categories=true)  %}
+
+                      {% if messages %}
+
+                        {% for type, message in messages %}
+
+                          <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                          {{message}}.
+                          </div>
+
+                        {% endfor %}
+
+                      {% endif %}
+
+                    {% endwith %}
+                  </p>
+
+                    
+                    <form action="" method="post" class="form-horizontal form-label-left">
+                    {{ form.csrf_token }}
+                    
+
+                    <div class="form-group {% if form.supplier_no.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.supplier_no.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.supplier_no(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.supplier_no.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.supplier_no.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group {% if form.first_name.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{form.first_name.id}}">{{ form.first_name.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.first_name(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.first_name.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.first_name.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+
+                    <div class="form-group {% if form.last_name.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.last_name.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.last_name(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.last_name.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.last_name.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="form-group {% if form.id_number.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.id_number.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.id_number(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.id_number.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.id_number.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if form.phone_number.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.phone_number.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.phone_number(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.phone_number.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.phone_number.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if form.centre.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.centre.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.centre(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.centre.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.centre.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+                   <div class="form-group {% if form.group.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.group.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.group(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.group.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.group.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="{{url_for('main.farmers')}}" class="btn btn-primary" type="button">Cancel</a>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>Import Farmers<small> Use the csv template with the agreed upon fields. Remember after import you still need to update farmer contracts</small></h2>
+                    <a href="{{url_for('main.farmers')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Back </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+                    
+                    <form action="{{ url_for('main.farmer_upload') }}" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    
+
+                    <div class="form-group {% if upload_form.farmers_csv.errors %} has-error {% endif %} ">
+                      <label for="{{ upload_form.farmers_csv.id }}" class="control-label col-md-3 col-sm-3 col-xs-12">Farmers CSV</label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{ upload_form.farmers_csv() }}
+                        {% if upload_form.farmers_csv.errors %}
+                        <span class="help-block">{{ upload_form.farmers_csv.errors[0] }}</span>
+                        {% else %}
+                        <p class="help-block">Only use the template with the agreed fields.</p>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="{{url_for('main.farmers')}}" class="btn btn-primary" type="button">Cancel</a>
+                        <button type="submit" class="btn btn-success">Import</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+{% endblock %}

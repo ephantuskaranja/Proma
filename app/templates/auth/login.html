@@ -1,0 +1,82 @@
+{% extends "auth/base.html" %}
+{% block login_content %}
+  <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+
+            <img src="{{url_for('static', filename='images/final-logo.png')}}">
+          {% with messages = get_flashed_messages(with_categories=true)  %}
+
+            {% if messages %}
+
+              {% for type, message in messages %}
+
+                  <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                    <strong>{{type|title}}!</strong> {{message}}.
+                  </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+          {% endwith %}
+
+            
+            <form action="" method="post">
+
+
+            {{ form.csrf_token }}
+              
+              
+
+
+              <div class="{% if form.username.errors %} has-error {% endif %}">
+
+
+                
+                {{ form.username(class_="form-control") }}
+
+                {% if form.username.errors %}
+                    <span class="help-block"></span>
+                    <span id="helpBlock2" class="help-block">{{ form.username.errors[0] }}</span>
+                {% endif %}
+
+              </div>
+
+              <div class="{% if form.password.errors %} has-error {% endif %}">
+                
+                {{ form.password(class_="form-control") }}
+                
+                {% if form.password.errors %}
+                    <span class="help-block"></span>
+                    <span id="helpBlock3" class="help-block">{{ form.password.errors[0] }}</span>
+                {% endif %}
+                
+              </div>
+
+
+              <div>
+                <button class="btn btn-default submit">Log in</button>
+              </div>
+
+              <a class="reset_pass" href="#">Forgot your password?</a>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h2> <strong>PROMA</strong> </h2>
+                  <p>©2017 All Rights Reserved. PROMA is a PayConnect product. Privacy and Terms</p>
+                </div>
+              </div>
+            </form>
+
+
+          </section>
+        </div>
+      </div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	New Motor Vehicle
+{% endblock %}
+
+
+{% block page_content %}
+	        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  
+                  <div class="x_title">
+                    <h2>New Motor Vehicle<small> Create new vehicle</small></h2>
+                    <a href="{{url_for('main.vehicles')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Back </a>
+                    <div class="clearfix"></div>
+                  </div>
+                  
+                  <div class="x_content">
+
+
+                    
+                    <form action="" method="post" class="form-horizontal form-label-left">
+                    {{ form.csrf_token }}
+                    
+
+                    <div class="form-group {% if form.reg_no.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.reg_no.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.reg_no(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.reg_no.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.reg_no.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group {% if form.make.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-make">{{ form.make.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.make(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.make.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.make.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                    
+                    <div class="form-group {% if form.body.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-make">{{ form.body.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.body(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.body.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.body.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group {% if form.color.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-color">{{ form.color.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.color(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.color.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.color.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+
+                    <div class="form-group {% if form.ownership.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-color">{{ form.ownership.label }} <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                         {{ form.ownership(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.ownership.errors %}
+                            <span class="help-block"></span>
+                            <span id="helpBlock2" class="help-block">{{ form.ownership.errors[0] }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button class="btn btn-primary" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	App Users Graders
+{% endblock %}
+
+
+{% block extra_css %}
+	<link href="{{url_for('static', filename='libs/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='libs/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+	        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>App Users (Graders) Registry</h2>
+                    <a href="{{url_for('main.new_grader')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> New App User(Grader)</a>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  <p>
+                  	{% with messages = get_flashed_messages(with_categories=true)  %}
+
+            {% if messages %}
+
+              {% for type, message in messages %}
+
+                  <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                     {{message}}.
+                  </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+          {% endwith %}
+                  </p>
+                  {% if objects %}
+                  	<table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th>Password</th>
+                          <th>Phone No</th>
+                          <th>Contract Price</th>
+                          <th>Role</th>
+                          <th>Added On</th>
+                          <th>Added By</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                  {% for obj in objects %}
+                  	<tr>                         
+                          <td>{{obj.first_name}}</td>
+                          <td>{{obj.last_name}}</td>
+                          <td>{{obj.username}}</td>
+                          <td>{{obj.app_password}}</td>
+                          <td>{{obj.phone_number}}</td>
+                          <td>{{obj.contract_price}}</td>
+                          {% if obj.role_id == 1 %}
+                            <td>Administrator</td>
+                            {% elif  obj.role_id == 2 %}
+                            <td>Grader/Clerk</td>
+                          {% endif %}
+                          <td>{{obj.draft_date}}</td>
+                          <td>{{obj.creator}}</td>
+                          <td>
+                           <a href="{{url_for('main.grader_trips', id=obj.id)}}" class="btn btn-success btn-xs pull-right"><i class="fa fa-eye"></i> View Trips</a>
+                           <a href="{{url_for('main.edit_grader', id=obj.id)}}" class="btn btn-info btn-xs pull-right"><i class="fa fa-eye"></i> Edit Grader</a>
+                           </td>
+                        </tr>
+                  {% endfor %}
+
+                   </tbody>
+                    </table>
+                  	
+                  {% endif %}
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{{url_for('static', filename='libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/jszip/dist/jszip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/pdfmake/build/pdfmake.min.js')}}"></script>
+    <script src="{{url_for('static', filename='libs/pdfmake/build/vfs_fonts.js')}}"></script>
+{% endblock %}
