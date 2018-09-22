@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="right_col" role="main">
+	<div class="">
+
+<div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Cooperative Union</h2>
+                    <a href="{{url_for('main.new_cooperative')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Create New Coop union</a>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      <p>
+                    {% with messages = get_flashed_messages(with_categories=true)  %}
+
+            {% if messages %}
+
+              {% for type, message in messages %}
+
+                  <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                     {{message}}.
+                  </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+          {% endwith %}
+                  </p>
+
+
+                  {% if cooperative %}
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>code</th>
+                          <th> Name</th>
+                          <th>Created</th>
+                          
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                  {% for cooperatives in cooperative %}
+                    <tr>
+                          <td>{{cooperatives.id}}</td>
+                          <td>{{cooperatives.code}}</td>
+                          <td>{{cooperatives.name}}</td>
+                          <td>{{cooperatives.creator}}</td>
+                         
+                        </tr>
+                  {% endfor %}
+
+                   </tbody>
+                    </table>
+                    
+                  {% endif %}
+                  
+
+                  
+                
+                   
+                  </div>
+                </div>
+              </div>
+            </div>  
+
+
+
+
+
+
+                    
+	</div>
+</div>
+{% endblock %}

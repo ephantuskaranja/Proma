@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="right_col" role="main">
+	<div class="">
+
+
+
+
+
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Cooperative Society</h2>
+                    <a href="{{url_for('main.new_society')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Create New Society</a>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      <p>
+                    {% with messages = get_flashed_messages(with_categories=true)  %}
+
+            {% if messages %}
+
+              {% for type, message in messages %}
+
+                  <div class="alert alert-{{type}} alert-dismissible fade in" role="alert">
+                     {{message}}.
+                  </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+          {% endwith %}
+                  </p>
+
+
+                  {% if society %}
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>code</th>
+                          <th> Name</th>
+                          <th>Created</th>
+                          
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                  {% for societies in society %}
+                    <tr>
+                          <td>{{societies.id}}</td>
+                          <td>{{societies.code}}</td>
+                          <td>{{societies.cooperative.name}}</td>
+                          <td>{{societies.creator}}</td>
+                          
+
+                         
+                        </tr>
+                  {% endfor %}
+
+                   </tbody>
+                    </table>
+                    
+                  {% endif %}
+                  
+
+  
+                   
+                  </div>
+                </div>
+              </div>
+            </div>           
+	</div>
+</div>
+{% endblock %}

@@ -96,10 +96,10 @@
                           <td>{{col.collection_date.strftime('%d-%m-%Y %H:%M %p')}}</td>
                           <td>
 
-                          {% if col.invalidated != True and current_user.username == 'bnyagwaya' %}
+                          {% if col.invalidated != True and current_user.username == 'lkalekye' %}
                             <a href="{{url_for('main.invalidate_collection', trip_id= trip.id, collection_id=col.id)}}" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i> Invalidate Collection</a>
 
-                            {% elif col.invalidated == True and current_user.username == 'bnyagwaya' %}
+                            {% elif col.invalidated == True and current_user.username == 'lkalekye' %}
                             <a href="{{url_for('main.validate_collection', trip_id= trip.id, collection_id=col.id)}}" class="btn btn-success btn-xs"><i class="fa fa-remove"></i> Validate Collection</a>
                           {% endif %}
 
@@ -137,6 +137,7 @@
                           <th>Gross Pay</th>
                           <th>KDB Cess</th>
                           <th>Net Pay</th>
+                           <th>Status</th>
                         </tr>
                       </thead>
 
@@ -150,6 +151,7 @@
                           <td>{{col.gross}}</td>
                           <td>{{ col.kdb|round(3,'common') }}</td>
                           <td>{{col.net}}</td>
+                          <td>{{col.status}}</td>
                         </tr>
                   {% endfor %}
 

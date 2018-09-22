@@ -48,7 +48,6 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Code</th>
                           <th>Name</th>
                           <th>Added On</th>
                           <th>Added By</th>
@@ -61,7 +60,6 @@
                   {% for factory in factories %}
                   	<tr>
                           <td>{{factory.id}}</td>
-                          <td>{{factory.code}}</td>
                           <td>{{factory.name}}</td>
                           <td>{{factory.draft_date.strftime('%Y-%m-%d %H:%M %p')}}</td>
                           <td>{{factory.creator}}</td>

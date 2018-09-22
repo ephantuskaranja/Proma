@@ -10,13 +10,37 @@ class SeasonForm(FlaskForm):
     name = StringField('Season Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Season Name"})
 
 class FactoryForm(FlaskForm):
-    code = StringField('Factory Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Factory Code"})
     name = StringField('Factory Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Factory Name"})
+
+
+class CooperativeForm(FlaskForm):
+    code = StringField('Cooperative Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Cooperative Code"})
+    name = StringField('Cooperative Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Cooperative Name"})
+
+class SocietyForm(FlaskForm):
+    code = StringField('Society Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Society Code"})
+    name = StringField('Society Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Society Name"})
+    cooperative = SelectField('Cooperative:', validators=[Required()], id='select_cooperative',  coerce=int)
+
 
 class ProduceForm(FlaskForm):
     code = StringField('Produce Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Produce Code"})
     name = StringField('Produce Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Produce Name"})
-    cess = StringField('KDB Cess', validators=[Required()], render_kw={"placeholder": "Kenya Dairy Board Cess"})
+    cess = StringField('Goverment', validators=[Required()], render_kw={"placeholder": "Goverment Fee"})
+
+
+class AdvanceForm(FlaskForm):
+    amount = StringField('amount', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Amount"})
+
+
+
+class LimitForm(FlaskForm):
+    percentage = StringField('percentage', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Percentage"})
+
+class LicenceForm(FlaskForm):
+    start_date = StringField('Start Date:', validators=[Required()], id='datetimepicker1')
+    end_date = StringField('End Date:', validators=[Required()], id='datetimepicker2')
+   
 
 
 class GroupForm(FlaskForm):
@@ -46,7 +70,7 @@ class FarmersForm(FlaskForm):
     id_number = StringField('ID No', validators=[Required()], render_kw={"placeholder": "National ID No"})
     phone_number = StringField('Phone Number', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Phone Number"})
     centre = SelectField('Station:', validators=[Required()], id='select_station',  coerce=int)
-    group = SelectField('Group:', validators=[Required()], id='select_group',  coerce=int)
+
 
 
 class FarmersUploadForm(FlaskForm):
@@ -62,10 +86,10 @@ class ContractForm(FlaskForm):
 
 class VehicleForm(FlaskForm):
     reg_no = StringField('Reg No', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Reg No"})
-    make = StringField('Make', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Make"})
-    body = StringField('Body', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Body"})
+    make = StringField('Model', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Make"})
+    body = StringField('Vehicle Type', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Body"})
     color = StringField('Color', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Color"})
-    ownership = SelectField(u'Ownership', choices=[('LNG', 'Longisa'), ('HRD', 'Hired')])
+    ownership = SelectField(u'Ownership', choices=[('OWN', 'Owned'), ('HRD', 'Hired')])
 
 class GraderForm(FlaskForm):
     first_name = StringField('First Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "First Name"})
@@ -88,7 +112,10 @@ class TripForm(FlaskForm):
 class CompleteTripForm(FlaskForm):
      total_weight_received = StringField('Total Kgs Received', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Total Kgs Received at the factory"})
     
-
+class CollectionPerGrader(FlaskForm):
+    grader = SelectField('Grader:', validators=[Required()], id='select grader',  coerce=int)
+    start_date = StringField('Start Date:', validators=[Required()], id='datetimepicker1')
+    end_date = StringField('End Date:', validators=[Required()], id='datetimepicker2')
 
 class DriverForm(FlaskForm):
     first_name = StringField('First Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "First Name"})

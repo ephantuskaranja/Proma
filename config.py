@@ -4,9 +4,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 POSTGRES = {
-    'user': 'proma',
-    'pw': 'proma2017',
-    'db': 'webportal_longisa',
+    'user': 'ephantus',
+    'pw': 'switcher12',
+    'db': 'webportal_enelerai',
     'host': 'localhost',
     'port': '5432',
 }
@@ -17,7 +17,7 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir, 'app/static/uploads')
-
+    
     @staticmethod
     def init_app(app):
         pass

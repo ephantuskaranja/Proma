@@ -72,12 +72,19 @@
                       <!-- start of user-activity-graph -->
                       <div id="graph_bar" style="width:100%; height:280px;"></div>
                       <!-- end of user-activity-graph -->
-
+                       <div class="row">
+                      <!--  <p> {{ farmer_payment }}</p> -->
+                      <p>{{'%0.2f' % total_advance |float }}</p>
+                         
+                       </div>
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                           <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent Collections</a>
                           </li>
                           <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Contract Details</a>
+                          </li>
+
+                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Advance</a>
                           </li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
@@ -153,6 +160,40 @@
                             <a href="{{url_for('main.new_contract', id=farmer.id)}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New Contract</a>
 
                           </div>
+
+                      <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                             {% if advances %}
+
+                            <table class="data table table-striped no-margin">
+                              <thead>
+                                <tr>
+                                  <th>Advance Date</th>
+                                  <th>Amount</th>
+                                  <th>Active</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for col in advances %}
+                                    <tr>
+                                      <td>{{col.valid_from}}</td>
+                                      <td>{{col.amount}}</td>
+                  
+                                      {% if col.active %}
+                                        <td><span class="label label-primary">Active</span></td>
+                                        {% else %}
+                                        <td>NOT ACTIVE</td>  
+                                      {% endif %}
+                                    </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                              
+                            {% endif %}
+                            <a href="{{url_for('main.new_farmer_advance', id=farmer.id)}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New Advance</a>
+
+                          </div>
+
+
                         </div>
                       </div>
                     </div>

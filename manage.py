@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import os
-from app import create_app, db
+from app import create_app, db, Flask
 from flask_script import Manager,Server
 from flask_migrate import Migrate, MigrateCommand
-from app.models import User
+from app.models import User, Farmer, Factory, Group, Processor, Produce, CollectionCentre, AppUser, Trip, Collection, Vehicle
+
+
+
 
 
 app = create_app('development')
@@ -12,6 +15,13 @@ migrate = Migrate(app, db)
 server = Server(host="0.0.0.0", port=18083)
 manager.add_command("runserver", server)
 manager.add_command('db', MigrateCommand)
+
+app.config['SECRET_KEY'] = 'mysecret'
+
+
+
+
+
 
 
 @manager.command
@@ -40,3 +50,6 @@ def adduser(username, fullname, pin):
 
 if __name__ == '__main__':
     manager.run()
+
+
+

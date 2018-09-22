@@ -1,15 +1,17 @@
-from datetime import datetime
+from datetime import datetime, date
+from sqlalchemy import Date, cast
+from sqlalchemy.sql.functions import func
 from flask import render_template, session, redirect, url_for, flash, request, current_app
-from flask_login import login_required, current_user
-from .forms import FarmersUploadForm, FactoryForm, CentreForm, GroupForm, ProcessorForm, ProduceForm, FarmersForm, SeasonForm, ContractForm, RouteForm,VehicleForm, GraderForm, DriverForm, TripForm, CompleteTripForm
-from ..models import Factory, CollectionCentre, Produce, Group, Processor, Farmer, Season, Collection, FarmerContract, Route, Vehicle, AppUser, Role, Driver, Trip, TripPayment, GraderPayment
+from flask_login import login_required, current_user, LoginManager
+from .forms import FarmersUploadForm, FactoryForm, LicenceForm, LimitForm, CooperativeForm, SocietyForm, CentreForm, GroupForm, ProcessorForm, CollectionPerGrader, ProduceForm, FarmersForm, SeasonForm, ContractForm, RouteForm,VehicleForm, GraderForm, DriverForm, TripForm, CompleteTripForm, AdvanceForm
+from ..models import Factory, CollectionCentre, Licence, Society, Produce, Group, FarmerAdvance, Processor, Farmer, Season, Collection, Cooperative, FarmerContract, Route, Vehicle, AppUser, Role, Driver, Trip, TripPayment, GraderPayment, FarmerPayment, Disbursed
 from app import db
 from werkzeug.utils import secure_filename
 import os
 import uuid
 import re
 import csv
-
+from pprint import pprint
 
 from . import main
 
@@ -23,6 +25,45 @@ def index():
     centre_count = CollectionCentre.query.count()
     return render_template('main/dashboard.html', centre_count=centre_count, farmers_count=farmer_count, graders_count=graders_count, routes_count=routes_count)
 
+@main.route('/cooperative', methods=['GET', 'POST'])
+@login_required
+def cooperative():
+    cooperative = Cooperative.query.all()
+    return render_template('main/cooperative.html', cooperative=cooperative)
+
+
+@main.route('/new-cooperative', methods=['GET', 'POST'])
+@login_required
+def new_cooperative():
+    form = CooperativeForm()
+    if form.validate_on_submit():
+        cooperative = Cooperative(code=form.code.data, name=form.name.data, creator=current_user)
+        db.session.add(cooperative)
+        db.session.commit()
+        flash('The Cooperative Union  was added successfully.', 'success')
+        return redirect(url_for('.cooperative'))
+    return render_template('main/new_cooperative.html', form=form)
+
+
+@main.route('/society', methods=['GET', 'POST'])
+@login_required
+def society():
+    society = Society.query.all()
+    return render_template('main/society.html', society=society)
+
+
+@main.route('/new-society', methods=['GET', 'POST'])
+@login_required
+def new_society():
+    form = SocietyForm()
+    form.cooperative.choices = [(row.id, row.name) for row in Cooperative.query.all()]
+    if form.validate_on_submit():
+        society = Society(code=form.code.data, name=form.name.data, creator=current_user,  cooperative_id=form.cooperative.data)
+        db.session.add(society)
+        db.session.commit()
+        flash('The Society  was added successfully.', 'success')
+        return redirect(url_for('.society'))
+    return render_template('main/new_society.html', form=form)
 
 @main.route('/factories', methods=['GET', 'POST'])
 @login_required
@@ -36,7 +77,7 @@ def factories():
 def new_factory():
     form = FactoryForm()
     if form.validate_on_submit():
-        factory = Factory(code=form.code.data, name=form.name.data, creator=current_user)
+        factory = Factory(name=form.name.data, creator=current_user)
         db.session.add(factory)
         db.session.commit()
         flash('The factory was added successfully.', 'success')
@@ -49,10 +90,8 @@ def new_factory():
 def edit_factory(id):
     factory = Factory.query.get_or_404(id)
     form = FactoryForm()
-    form.code.data = factory.code
     form.name.data = factory.name
     if form.validate_on_submit():
-        factory.code = request.form.get('code')
         factory.name = request.form.get('name')
         db.session.add(factory)
         db.session.commit()
@@ -288,6 +327,8 @@ def graders():
     return render_template('main/graders.html', objects=objects)
 
 
+
+
 @main.route('/new_grader', methods=['GET', 'POST'])
 @login_required
 def new_grader():
@@ -363,6 +404,16 @@ def driver_trips(id):
 def drivers():
     drivers = Driver.query.all()
     return render_template('main/drivers.html', objects=drivers)
+
+
+
+def get_farmer_info(phone_number):
+    farmer_data = Farmer.query.filter_by(phone_number = phone_number)
+    return farmer_data.id
+
+def get_farmer_id(id):
+    farmer_data = Farmer.query.filter_by(farmer_id = id)
+    return farmer_data;
 
 
 @main.route('/new_driver', methods=['GET', 'POST'])
@@ -461,14 +512,97 @@ def farmers():
     farmers = Farmer.query.all()
     return render_template('main/farmers.html', farmers=farmers)
 
+def get_farmer(id):
+    return Farmer.query.filter_by(id=id).first()
+
+def get_farmer_contract(farmer_id):
+    return FarmerContract.query.filter(FarmerContract.farmer_id == farmer_id, FarmerContract.active == True).first()
+
+def get_farmer_collection(farmer_id):
+    return FarmerContract.query.filter(FarmerContract.farmer_id == farmer_id, FarmerContract.active == True).first()
+
+def get_total_farmer_advance(farmer_id):
+    total_advance = db.session.query(FarmerAdvance.farmer_id, func.sum(FarmerAdvance.amount ).label('total_advance')).filter(FarmerAdvance.farmer_id == farmer_id).all()
+    return total_advance
+
+
+def get_farmer_payment(farmer_id):
+    farmer_cumm = get_gross_payment(contract.price, col.produce_weight) 
+
+    return farmer_cumm
+
+
+@main.route('/cumm-farmers', methods=['GET', 'POST'])
+@login_required
+def cumm_farmer():
+    # data = Farmer.query.all()
+
+    start_date =date.today().replace(day=1)
+    #end_date = datetime.strptime(form.end_date.data, "%m/%d/%Y %H:%M %p").date() #
+
+    data = db.session.query(TripPayment.farmer_id, func.sum(TripPayment.net ).label('net'), func.sum(TripPayment.net * 0.75).label('farmer_loan_amount')).filter(TripPayment.status == 'NOT PAID' ).group_by(TripPayment.farmer_id).all()
+    
+
+
+    return render_template('main/farmer_cumm.html', data=data, start_date= start_date)
+
+
+
+@main.route('/loan-limit', methods=['GET', 'POST'])
+@login_required
+def loan_limit():
+   
+    
+
+
+    return render_template('main/farmer_cumm.html')
+
+
+
+@main.route('/advance', methods=['GET', 'POST'])
+@login_required
+def advance():
+    # advance = Advance.query.all()
+    return render_template('main/advance.html')
+
+
+
+@main.route('/licence', methods=['GET', 'POST'])
+@login_required
+def licence():
+    if current_user.role_id == 3:
+        licences = Licence.query.all()
+        return render_template('main/licence.html', licences = licences)
+    else:
+        return redirect('/')
+
+@main.route('/new-licence', methods=['GET', 'POST'])
+@login_required
+def new_licence():
+    form = LicenceForm()
+    if form.validate_on_submit():
+        licence = Licence(start_date=form.start_date.data, end_date=form.end_date.data, creator=current_user)
+        db.session.add(licence)
+        db.session.commit()
+        flash('The Licence was added successfully.', 'success')
+        return redirect(url_for('.licence'))
+    return render_template('main/new_licence.html', form=form)
 
 @main.route('/farmer/<int:id>')
 @login_required
 def farmer(id):
     farmer = Farmer.query.get_or_404(id)
+    contract_farmer = db.session.query(FarmerContract.price)
     contracts = FarmerContract.query.filter_by(farmer_id=farmer.id)
+    advances = FarmerAdvance.query.filter_by(farmer_id=farmer.id)
     collections = Collection.query.filter_by(farmer_id=farmer.id)
-    return render_template('main/farmer.html', farmer=farmer, collections=collections, contracts=contracts)
+    total_advance = db.session.query(FarmerAdvance.farmer_id, func.sum(FarmerAdvance.amount * 100).label('total_advance')).group_by(FarmerAdvance.farmer_id).all()
+    farmer_cumm =  db.session.query(Collection.farmer_id, func.sum(Collection.produce_weight)
+        ).group_by(Collection.farmer_id).all()
+
+
+
+    return render_template('main/farmer.html', farmer=farmer, collections=collections, contracts=contracts,  advances=advances, total_advance=total_advance, farmer_cumm=farmer_cumm)
 
 
 
@@ -502,12 +636,35 @@ def new_contract(id):
     return render_template('main/new_contract.html', farmer=farmer, form=form)
 
 
+
+@main.route('/farmer/<int:id>/new-farmer-advance', methods=['GET', 'POST'])
+@login_required
+def new_farmer_advance(id):
+    farmer = Farmer.query.get_or_404(id)
+    form = AdvanceForm()
+    if form.validate_on_submit():
+        # Deactivate current contract
+        
+        current_advance = FarmerAdvance.query.filter(FarmerAdvance.farmer_id == farmer.id, FarmerAdvance.active == True).first()
+        if current_advance:
+            current_advance.active = False
+            db.session.add(current_advance)
+        advance = FarmerAdvance( 
+            farmer_id=farmer.id, 
+            amount=form.amount.data,
+        )
+        db.session.add(advance)
+        db.session.commit()
+        flash('Advance added successfully.', 'success')
+        return redirect(url_for('.farmer', id=farmer.id))
+    return render_template('main/new_advance.html', farmer=farmer, form=form)
+
+
 @main.route('/trips', methods=['GET', 'POST'])
 @login_required
 def trips():
     objects = Trip.query.all()
     return render_template('main/trips.html', objects=objects )
-
 
 @main.route('/new_trip', methods=['GET', 'POST'])
 @login_required
@@ -547,7 +704,7 @@ def new_trip():
 def trip_collections(id):
     trip = Trip.query.get_or_404(id)
     variance = (trip.total_weight_received) - (trip.total_weight_collected)
-    grader_payment = (trip.total_weight_received) * 3
+    grader_payment = (trip.total_weight_received) * 1
     collections = Collection.query.filter(Collection.trip_id == trip.id).all()
     payments = TripPayment.query.filter_by(trip_id=trip.id)
     return render_template('main/trip_collections.html', variance=variance,  grader_payment= grader_payment, collections=collections, trip=trip, payments=payments)
@@ -590,7 +747,7 @@ def edit_trip(id):
     variance = 0
     trip = Trip.query.get_or_404(id)
     variance = (trip.total_weight_received) - (trip.total_weight_collected)
-    grader_payment = (trip.total_weight_received) * 3
+    grader_payment = (trip.total_weight_received) * 1
 
     collections = Collection.query.filter(Collection.trip_id == trip.id).all()
     invalidated_collections = Collection.query.filter(Collection.invalidated == True, Collection.trip_id == trip.id).all()
@@ -611,19 +768,23 @@ def edit_trip(id):
     return render_template('main/edit_trip.html', variance=variance, collections=collections, grader_payment= grader_payment, invalidated_collections=invalidated_collections, form=form, trip=trip, payments=payments)
 
 
-def get_farmer_contract(farmer_id):
-    return FarmerContract.query.filter(FarmerContract.farmer_id == farmer_id, FarmerContract.active == True).first()
+
 
 def get_gross_payment(rate, weight):
     return rate * weight
 
+def get_farmer_total_advance(amount):
+    return FarmerAdvance.query.count(amount)
+
 def get_net_payment(gross, kdb):
-    return gross-kdb
+    return gross-kdb - 5
 
 def get_kdb_amount(weight):
     produce = Produce.query.first()
     rate = produce.cess
     return weight*rate
+
+
 
 
 @main.route('/trip/<int:id>/payments', methods=['GET', 'POST'])
@@ -661,37 +822,50 @@ def generate_trip_payments(id):
     return redirect(url_for('.edit_trip', id=trip.id))
 
 
-
-@main.route('/trips', methods=['GET', 'POST'])
+@main.route('/grader_payment', methods=['GET', 'POST'])
 @login_required
-def generate_grader_payments():
-    trip = Trip.query.all()
-    if trip.grader_payment_status == "PAID":
-        flash("TRIP PAID. CAN ONLY PAY UNDAID TRIPS", "error")
-        return redirect(url_for('.trips'))
+def grader_payment():
 
-    trips = Trip.query.filter(Trip.grader_payment_status('UNPAID'))
-    for trip in trips:
-        payment = TripPayment(
-            grader_payment_status = "UNPAID",
-            grader_payment =trip.grader_payment,
-            trip_id = trip.id,
-            grader_id = trip.grader_id,
+    grader_collections = Trip.query.all()
+    return render_template('main/grader_payment.html', grader_collections = grader_collections)
+
+@main.route('/grader_payment', methods=['GET', 'POST'])
+@login_required
+def generate_grader_payment():
+
+    grader_collection = Trip.query.filter(Trip.payment_grader_status.isnot(True)).all()
+
+    for col in grader_collection:
+        payment = Trip(
+            payment_grader_status = "UNPAID",
+            grader_id = grader.id,
+            total_weight_received =col.total_weight_received,
+            grader_payment =col.grader_payment
             
             )
-        trip.payment_generated = True
-        db.session.add(trip)
+        col.payment_generated = True
+        db.session.add(col)
         db.session.add(payment)
-    db.session.commit()
-    flash('Payments Generated successfully.', 'success')
-    return redirect(url_for('.trips'))
+        db.session.commit()
+    
+    return render_template('main/grader_payment.html', payment= grader_payments)
 
+
+# def get_total_collection():
+#     total_collections = db.session.query(db.func.sum(Collection.produce_weight))
+#     return get_total_collection()
 
 @main.route('/collections')
 @login_required
 def collections():
+    total_collection = db.session.query(db.func.sum(Collection.produce_weight))
+    # #Collection.query(db.func.count(Collection.produce_weight))
     collections = Collection.query.all()
-    return render_template('main/collections.html', collections=collections)
+    return render_template('main/collections.html', collections=collections, total_collection=total_collection)
+
+
+
+
 
 
 @main.route('/new-farmer', methods=['GET', 'POST'])
@@ -700,7 +874,7 @@ def new_farmer():
     form = FarmersForm()
     upload_form = FarmersUploadForm()
     form.centre.choices = [(row.id, row.name) for row in CollectionCentre.query.all()]
-    form.group.choices = [(row.id, row.name) for row in Group.query.all()]
+    # form.group.choices = [(row.id, row.name) for row in Group.query.all()]
     if form.validate_on_submit():
         farmer = Farmer(
             supplier_no=form.supplier_no.data, 
@@ -708,7 +882,7 @@ def new_farmer():
             last_name=form.last_name.data, 
             creator=current_user, 
             centre_id=form.centre.data,
-            group_id=form.group.data,
+            # group_id=form.group.data,
             id_number = form.id_number.data,
             phone_number = form.phone_number.data
         )
@@ -743,16 +917,14 @@ def activate_farmer(id):
 def edit_farmer(id):
     farmer = Farmer.query.get_or_404(id)
     upload_form = FarmersUploadForm()
-    form = FarmersForm(centre=farmer.centre_id, group=farmer.group_id, obj=farmer)
+    form = FarmersForm(centre=farmer.centre_id, obj=farmer)#need to add group like centre here
     form.centre.choices = [(row.id, row.name) for row in CollectionCentre.query.all()]
-    form.group.choices = [(row.id, row.name) for row in Group.query.all()]
     if form.validate_on_submit():
         farmer.route_id = request.form.get('route')
         farmer.supplier_no=request.form.get('supplier_no')
         farmer.first_name=request.form.get('first_name')
         farmer.last_name=form.last_name.data
         farmer.centre_id=request.form.get('centre')
-        farmer.group_id=request.form.get('group')
         farmer.id_number = request.form.get('id_number')
         farmer.phone_number = request.form.get('phone_number')
         db.session.add(farmer)
@@ -760,7 +932,6 @@ def edit_farmer(id):
         flash('The farmer was updated successfully.', 'success')
         return redirect(url_for('.farmer', id=farmer.id))
     return render_template('main/new_farmer.html', form=form, upload_form=upload_form)
-
 
 @main.route('/farmer-upload', methods=['GET', 'POST'])
 def farmer_upload():
@@ -798,23 +969,37 @@ def preview_import(file):
     return render_template('main/preview_import.html', data=data, csv_file=file)
 
 def get_farmer_centre(centre):
-    return CollectionCentre.query.filter(CollectionCentre.name == centre).first()
+    centreId = CollectionCentre.query.filter(CollectionCentre.name==centre).with_entities(CollectionCentre.id).first()
+    return centreId
+
+def get_farmer_group(group):
+    return Group.query.filter(Group.name == group).first()
 
 @main.route('/save-upload/<file>')
 def save_upload(file):
     farmers = read_csv_upload(os.path.join(current_app.config['UPLOAD_FOLDER'],file+".csv"))
     for farmer in farmers:
-        centre = get_farmer_centre(farmer['centre'])
+        centreId = get_farmer_centre(farmer['centre'])
+        
         farmer_obj = Farmer(
             supplier_no=farmer['supplier_no'], 
             first_name=farmer['first_name'], 
             last_name=farmer['last_name'], 
             creator=current_user, 
-            centre_id= centre.id,
             id_number = farmer['id_number'],
-            phone_number = farmer['phone_number']
+            phone_number = farmer['phone_number'],
+            centre_id = centreId
         )
         db.session.add(farmer_obj)
     db.session.commit()
     flash('The farmers upload have saved successfully. Create a new contracts for the farmers now', 'success')
     return redirect(url_for('.farmers'))
+
+
+
+
+
+def get_amount_pkg_farmer(farmer_id):
+  
+    farmer_pkg = FarmerContract.query.filter(FarmerContract.farmer_id == farmer_id, FarmerContract.active == True).first()
+    return farmer_pkg.price;

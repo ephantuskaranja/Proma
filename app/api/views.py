@@ -18,7 +18,7 @@ def get_produce():
 
 @api.route('/farmers/',  methods=['GET'])
 def get_farmers():
-	return jsonify({'farmers':[ s.to_json() for s in Farmer.query.filter(  (Farmer.status != 'INACTIVE') | (Farmer.status == None)  ) ]})
+	return jsonify({'farmers':[ s.to_json() for s in Farmer.query.all() ]})
 
 @api.route('/users/',  methods=['GET'])
 def get_users():

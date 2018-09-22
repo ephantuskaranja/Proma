@@ -27,16 +27,7 @@
                     {{ form.csrf_token }}
                     
 
-                    <div class="form-group {% if form.code.errors %} has-error {% endif %}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.code.label }} <span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                         {{ form.code(class_="form-control col-md-7 col-xs-12") }}
-                         {% if form.code.errors %}
-                            <span class="help-block"></span>
-                            <span id="helpBlock2" class="help-block">{{ form.code.errors[0] }}</span>
-                        {% endif %}
-                      </div>
-                    </div>
+                    
 
                     <div class="form-group {% if form.name.errors %} has-error {% endif %}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.name.label }} <span class="required">*</span></label>

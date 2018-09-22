@@ -53,9 +53,10 @@
                           <th>Last Name</th>
                           <th>Status</th>
                           <th>Phone No</th>
-                          <th>Centre</th>
-                          <th>CBO Group</th>
+                          
+                          <th>Deductions</th> 
                           <th>Total Delivered (KGs)</th>
+
                           <th>Added On</th>
                           <th>Added By</th>
                           <th>Actions</th>
@@ -70,11 +71,12 @@
                           <td>{{farmer.supplier_no}}</td>
                           <td>{{farmer.first_name}}</td>
                           <td>{{farmer.last_name}}</td>
-                          <td>{{farmer.status}}</td>
+                          <td>Active</td>
                           <td>{{farmer.phone_number}}</td>
-                          <td>{{farmer.centre}}</td>
-                          <td>{{farmer.group}}</td>
+                       
+                          <td>{{farmer.group}}</td> -->
                           <td>{{ '{0:0.2f}'.format(farmer.get_cumm_weight())  }}</td>
+                          
                           <td>{{farmer.draft_date}}</td>
                           <td>{{farmer.creator}}</td>
                           <td><a href="{{url_for('main.farmer', id=farmer.id)}}" class="btn btn-success btn-xs pull-right"><i class="fa fa-eye"></i> View</a></td>
@@ -109,4 +111,5 @@
     <script src="{{url_for('static', filename='libs/jszip/dist/jszip.min.js')}}"></script>
     <script src="{{url_for('static', filename='libs/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{url_for('static', filename='libs/pdfmake/build/vfs_fonts.js')}}"></script>
+    
 {% endblock %}

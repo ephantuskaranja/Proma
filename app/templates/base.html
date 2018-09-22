@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Highlands Creamers and Foods- {% block page_title %} Dashboard {% endblock %} </title>
+    <title>Enelerai  Women Cooperative Society{% block page_title %} Dashboard {% endblock %} </title>
 
     <!-- Bootstrap -->
     <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,7 +34,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="/" class="site_title"><i class="fa fa-leaf"></i> <span> PROMA </span></a>
+              <a href="/" class="site_title"><i class="fa fa-leaf"></i> <span> PROMA:PC </span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -60,36 +60,57 @@
                 <ul class="nav side-menu">
                   <li><a href="/"><i class="fa fa-home"></i> Dashboard </a></li>
                 </ul>
+                
                   <h3>Setup</h3>
                   <ul class="nav side-menu">
-                    <!-- <li><a href="{{url_for('main.seasons')}}"><i class="fa fa-sun-o"></i> Seasons </a></li> -->
-                    <li><a href="{{url_for('main.factories')}}"><i class="fa fa-bank"></i> Factories </a></li>
+                    <li><a href="{{url_for('main.cooperative')}}"><i class="fa fa-bank"></i> Coooperative Union </a></li>
+                    <li><a href="{{url_for('main.society')}}"><i class="fa fa-bars"></i> Coooperative Societies </a></li>
+                    <li><a href="{{url_for('main.factories')}}"><i class="fa fa-object-group"></i> Factories </a></li>
                     <li><a href="{{url_for('main.produce')}}"><i class="fa fa-tree"></i> Produce </a></li>
                    
                     <li><a href="{{url_for('main.processors')}}"><i class="fa fa-sun-o"></i> Processors </a></li>
                   </ul>
                   <h3>Farmers</h3>
                   <ul class="nav side-menu">
-                   <li><a href="{{url_for('main.groups')}}"><i class="fa fa-american-sign-language-interpreting"></i> Groups </a></li>
+                   <!-- <li><a href="{{url_for('main.groups')}}"><i class="fa fa-american-sign-language-interpreting"></i> Groups </a></li> -->
                     <li><a href="{{url_for('main.routes')}}"><i class="fa fa-location-arrow"></i> Routes </a></li>
-                    <li><a href="{{url_for('main.centres')}}"><i class="fa fa-cab"></i> Stations </a></li>
+                    <li><a href="{{url_for('main.centres')}}"><i class="fa fa-home"></i> Centres </a></li>
                     <li><a href="{{url_for('main.farmers')}}"><i class="fa fa-group"></i> Farmers </a></li>
+
+                    
+                  </ul>
+                  <ul class="nav side-menu">
+                  <h3 class="hidden">Loan Module</h3>
+                    <li><a href="{{url_for('main.cumm_farmer')}}" ><i class="fa fa-money "></i> Loans/ Farmer Payment </a></li>
+                    <li><a href="#" class="hidden"><i class="fa fa- "></i> Loan Limit</a></li>
                   </ul>
                   <h3>Logistics</h3>
                   <ul class="nav side-menu">
-                    <li><a href="{{url_for('main.vehicles')}}"><i class="fa fa-truck"></i> Motorcycle  </a></li>
-                    <li><a href="{{url_for('main.drivers')}}" class="hidden" ><i class="fa fa-cab"></i> Drivers </a></li>
-                    <li><a href="{{url_for('main.graders')}}"><i class="fa fa-user-md"></i> Graders/App Users </a></li>
+                    <li><a href="{{url_for('main.vehicles')}}"><i class="fa fa-truck"></i> Vehicle  </a></li>
+					<li><a href="{{url_for('main.drivers')}}"><i class="fa fa-truck"></i> Drivers  </a></li>
+                 
+                    <li><a href="{{url_for('main.graders')}}"><i class="fa fa-cab"></i> Graders </a></li>
+                    
                   </ul>
                   <h3>Collections</h3>
                   <ul class="nav side-menu">
-                    <li><a href="{{url_for('main.trips')}}"><i class="fa fa-truck"></i> Trips </a></li>
-                    <li><a href="{{url_for('main.collections')}}"><i class="fa fa-truck"></i> Collections </a></li>
+                    <li><a href="{{url_for('main.trips')}}"><i class="fa fa-location-arrow"></i> Trips </a></li>
+                    <li><a href="{{url_for('main.collections')}}"><i class="fa fa-sign-out"></i> Collections </a></li>
+                    <li><a href="{{url_for('main.grader_payment')}}"><i class="fa fa-money"></i> Transporters Payments</a></li>
                   </ul>
                   <h3>Reports</h3>
                   <ul class="nav side-menu">
                     <li><a href="{{url_for('reports.home')}}"><i class="fa fa-line-chart"></i> Reports </a></li>
                   </ul>
+                    {% if current_user.role_id == 3%}
+                    <h3>Licence</h3>
+                  <ul class="nav side-menu">
+                    <li><a href="{{url_for('main.licence')}}"><i class="fa fa-cab"></i>
+                    Licence </a></li>
+                    </ul>
+                    {% endif %}
+
+                  
               </div>
               
 
