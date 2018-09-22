@@ -53,7 +53,6 @@ class ProcessorForm(FlaskForm):
 
 
 class RouteForm(FlaskForm):
-    code = StringField('Route Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route Code"})
     name = StringField('Route Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route Name"})
 
 

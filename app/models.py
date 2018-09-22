@@ -305,7 +305,6 @@ class Driver(db.Model):
 class Route(db.Model):
     __tablename__ = 'routes'
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(10), unique=True, index=True)
     name = db.Column(db.String(64), unique=True, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     draft_date = db.Column(db.DateTime(), default=datetime.now)
@@ -315,7 +314,6 @@ class Route(db.Model):
     def to_json(self):
         return {
             'route_id': self.id,
-            'code':self.code,
             'name':self.name
         }
 
