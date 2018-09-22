@@ -68,7 +68,7 @@ class FarmersForm(FlaskForm):
     last_name = StringField('Last Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Last Name"})
     id_number = StringField('ID No', validators=[Required()], render_kw={"placeholder": "National ID No"})
     phone_number = StringField('Phone Number', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Phone Number"})
-    centre = SelectField('Station:', validators=[Required()], id='select_station',  coerce=int)
+    centre = SelectField('Centre:', validators=[Required()], id='select_centre',  coerce=int)
 
 
 
