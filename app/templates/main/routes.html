@@ -49,6 +49,8 @@
                         <tr>
                           <th>#</th>
                           <th>Name</th>
+                          <th>Start-Point</th>
+                          <th>End-Point</th>
                           <th>Added On</th>
                           <th>Added By</th>
                           <th>Actions</th>
@@ -61,6 +63,8 @@
                   	<tr>
                           <td>{{prod.id}}</td>
                           <td>{{prod.name}}</td>
+                          <td>{{prod.start}}</td>
+                          <td>{{prod.end}}</td>
                           <td>{{prod.draft_date}}</td>
                           <td>{{prod.creator}}</td>
                            <td><a href="{{ url_for('main.edit_route', id=prod.id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a></td>

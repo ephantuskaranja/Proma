@@ -251,7 +251,7 @@ def routes():
 def new_route():
     form = RouteForm()
     if form.validate_on_submit():
-        route = Route(name=form.name.data, creator=current_user)
+        route = Route(name=form.name.data, start=form.start.data, end=form.end.data, creator=current_user)
         db.session.add(route)
         db.session.commit()
         flash('Route was added successfully.', 'success')

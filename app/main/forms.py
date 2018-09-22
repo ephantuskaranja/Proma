@@ -54,6 +54,10 @@ class ProcessorForm(FlaskForm):
 
 class RouteForm(FlaskForm):
     name = StringField('Route Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route Name"})
+    start = StringField('Route Start', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route start-point"})
+    end = StringField('Route End', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route end-point"})
+
+
 
 
 class CentreForm(FlaskForm):

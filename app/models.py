@@ -305,6 +305,8 @@ class Route(db.Model):
     __tablename__ = 'routes'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
+    start = db.Column(db.String(64), index=True)
+    end = db.Column(db.String(64), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     draft_date = db.Column(db.DateTime(), default=datetime.now)
     trips = db.relationship('Trip', lazy='dynamic', backref='route')
@@ -313,7 +315,9 @@ class Route(db.Model):
     def to_json(self):
         return {
             'route_id': self.id,
-            'name':self.name
+            'name':self.name,
+            'start':self.start,
+            'end':self.end
         }
 
 
