@@ -25,10 +25,7 @@
                     
                     <form action="" method="post" class="form-horizontal form-label-left">
                     {{ form.csrf_token }}
-                    
-
-  
-
+                   
                     <div class="form-group {% if form.name.errors %} has-error {% endif %}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.name.label }} <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">

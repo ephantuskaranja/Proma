@@ -26,7 +26,7 @@ class SocietyForm(FlaskForm):
 class ProduceForm(FlaskForm):
     code = StringField('Produce Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Produce Code"})
     name = StringField('Produce Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Produce Name"})
-    cess = StringField('Goverment', validators=[Required()], render_kw={"placeholder": "Goverment Fee"})
+    
 
 
 class AdvanceForm(FlaskForm):

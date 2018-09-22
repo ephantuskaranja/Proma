@@ -50,7 +50,6 @@
                           <th>#</th>
                           <th>Code</th>
                           <th>Name</th>
-                          <th>Goverment</th>
                           <th>Added On</th>
                           <th>Added By</th>
                           <th>Actions</th>
@@ -64,7 +63,6 @@
                           <td>{{prod.id}}</td>
                           <td>{{prod.code}}</td>
                           <td>{{prod.name}}</td>
-                          <td>{{prod.cess}}</td>
                           <td>{{prod.draft_date.strftime('%Y-%m-%d %H:%M %p')}}</td>
                           <td>{{prod.creator}}</td>
                           <td><a href="{{ url_for('main.edit_produce', id=prod.id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a></td>

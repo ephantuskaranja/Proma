@@ -172,7 +172,6 @@ class Produce(db.Model):
     code = db.Column(db.String(10), unique=True, index=True)
     name = db.Column(db.String(64), unique=True, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    cess = db.Column(db.Float, default=0.0)
     draft_date = db.Column(db.DateTime(), default=datetime.now)
     produce = db.relationship('Collection', lazy='dynamic', backref='farmer_produce')
     contract = db.relationship('FarmerContract', lazy='dynamic', backref='produce')

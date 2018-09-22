@@ -132,7 +132,7 @@ def produce():
 def new_produce():
     form = ProduceForm()
     if form.validate_on_submit():
-        produce = Produce(code=form.code.data, name=form.name.data, creator=current_user, cess=form.cess.data)
+        produce = Produce(code=form.code.data, name=form.name.data, creator=current_user)
         db.session.add(produce)
         db.session.commit()
         flash('The Produce was added successfully.', 'success')
