@@ -82,6 +82,7 @@ class Factory(db.Model):
     __tablename__ = 'factories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
+    code = db.Column(db.String(10), unique=True, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     draft_date = db.Column(db.DateTime(), default=datetime.now)
 

@@ -77,7 +77,7 @@ def factories():
 def new_factory():
     form = FactoryForm()
     if form.validate_on_submit():
-        factory = Factory(name=form.name.data, creator=current_user)
+        factory = Factory(code=form.code.data, name=form.name.data, creator=current_user)
         db.session.add(factory)
         db.session.commit()
         flash('The factory was added successfully.', 'success')
@@ -90,8 +90,10 @@ def new_factory():
 def edit_factory(id):
     factory = Factory.query.get_or_404(id)
     form = FactoryForm()
+    form.code.data = factory.code
     form.name.data = factory.name
     if form.validate_on_submit():
+        factory.code = request.form.get('code')
         factory.name = request.form.get('name')
         db.session.add(factory)
         db.session.commit()
