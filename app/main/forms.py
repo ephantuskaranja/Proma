@@ -20,7 +20,7 @@ class CooperativeForm(FlaskForm):
 class SocietyForm(FlaskForm):
     code = StringField('Society Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Society Code"})
     name = StringField('Society Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Society Name"})
-    cooperative = SelectField('Cooperative:', validators=[Required()], id='select_cooperative',  coerce=int)
+    cooperative = SelectField('Cooperative Union:', validators=[Required()], id='select_cooperative',  coerce=int)
 
 
 class ProduceForm(FlaskForm):
