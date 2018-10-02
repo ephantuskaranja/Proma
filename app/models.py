@@ -250,7 +250,6 @@ class AppUser(db.Model):
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     phone_number = db.Column(db.String(20), unique=True, index=True)
-    contract_price = db.Column(db.String(20), unique=True, index=True)
     app_password = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
