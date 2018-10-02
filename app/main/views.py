@@ -77,7 +77,7 @@ def factories():
 def new_factory():
     form = FactoryForm()
     if form.validate_on_submit():
-        factory = Factory(code=form.code.data, name=form.name.data, creator=current_user)
+        factory = Factory(number=form.number.data, name=form.name.data, creator=current_user)
         db.session.add(factory)
         db.session.commit()
         flash('The factory was added successfully.', 'success')
@@ -149,11 +149,9 @@ def edit_produce(id):
     form = ProduceForm()
     form.code.data = produce.code
     form.name.data = produce.name
-    form.cess.data = produce.cess
     if form.validate_on_submit():
         produce.code = request.form.get('code')
         produce.name = request.form.get('name')
-        produce.cess = request.form.get('cess')
         db.session.add(produce)
         db.session.commit()
         flash('The produce was updated successfully.', 'success')

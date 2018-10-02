@@ -28,13 +28,13 @@
 
 
                     <!-- factorynumber -->
-                    <div class="form-group {% if form.code.errors %} has-error {% endif %}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.code.label }} <span class="required">*</span></label>
+                    <div class="form-group {% if form.number.errors %} has-error {% endif %}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ form.number.label }} <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         {{ form.code(class_="form-control col-md-7 col-xs-12") }}
-                         {% if form.code.errors %}
+                         {{ form.number(class_="form-control col-md-7 col-xs-12") }}
+                         {% if form.number.errors %}
                             <span class="help-block"></span>
-                            <span id="helpBlock2" class="help-block">{{ form.code.errors[0] }}</span>
+                            <span id="helpBlock2" class="help-block">{{ form.number.errors[0] }}</span>
                         {% endif %}
                       </div>
                     </div>
@@ -53,6 +53,9 @@
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+                        <a href="{{url_for('main.factories')}}" class="btn btn-primary" type="button">Cancel</a>
                     <button class="btn btn-primary" type="reset">Reset</button>
                         <button type="submit" class="btn btn-success">Submit</button>
                       </div>

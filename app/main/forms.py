@@ -10,7 +10,7 @@ class SeasonForm(FlaskForm):
     name = StringField('Season Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Season Name"})
 
 class FactoryForm(FlaskForm):
-    code = StringField('Factory Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Factory Code"})
+    number = StringField('Factory Number', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Factory Number"})
     name = StringField('Factory Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Factory Name"})
     
 class CooperativeForm(FlaskForm):
