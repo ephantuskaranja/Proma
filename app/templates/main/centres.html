@@ -21,7 +21,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Buying/Collection Stations</h2>
+                    <h2>Buying/Collection Centres</h2>
                     <a href="{{url_for('main.new_centre')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> New Centre</a>
                     <div class="clearfix"></div>
                   </div>
@@ -48,7 +48,6 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Code</th>
                           <th>Name</th>
                           <th>Route</th>
                           <th>Added On</th>
@@ -62,7 +61,6 @@
                   {% for centre in centres %}
                   	<tr>
                           <td>{{centre.id}}</td>
-                          <td>{{centre.code}}</td>
                           <td>{{centre.name}}</td>
                           <td>{{centre.route}}</td>
                           <td>{{centre.draft_date}}</td>

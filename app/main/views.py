@@ -207,7 +207,7 @@ def processors():
 def new_processor():
     form = ProcessorForm()
     if form.validate_on_submit():
-        processor = Processor(code=form.code.data, name=form.name.data, creator=current_user)
+        processor = Processor(code=form.code.data, name=form.name.data, type=form.type.data, creator=current_user)
         db.session.add(processor)
         db.session.commit()
         flash('The Processor was added successfully.', 'success')
@@ -467,7 +467,7 @@ def new_centre():
     form = CentreForm()
     form.route.choices = [(row.id, row.name) for row in Route.query.all()]
     if form.validate_on_submit():
-        centre = CollectionCentre(code=form.code.data, name=form.name.data, collection_centres_creator=current_user, route_id=form.route.data)
+        centre = CollectionCentre(name=form.name.data, collection_centres_creator=current_user, route_id=form.route.data)
         db.session.add(centre)
         db.session.commit()
         flash('The centre was added successfully.', 'success')
@@ -489,11 +489,9 @@ def centre_farmers(id):
 def edit_centre(id):
     centre = CollectionCentre.query.get_or_404(id)
     form = CentreForm(route=centre.route_id)
-    form.code.data = centre.code
     form.name.data = centre.name
     form.route.choices = [(row.id, row.name) for row in Route.query.all()]
     if form.validate_on_submit():
-        centre.code = request.form.get('code')
         centre.name = request.form.get('name')
         centre.route_id = request.form.get('route')
         db.session.add(centre)

@@ -5,6 +5,7 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
 
 
+
 class SeasonForm(FlaskForm):
     code = StringField('Season Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Season Code"})
     name = StringField('Season Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Season Name"})
@@ -50,6 +51,7 @@ class GroupForm(FlaskForm):
 class ProcessorForm(FlaskForm):
     code = StringField('Processor Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Code"})
     name = StringField('Processor Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Name"})
+    type = StringField('Processor Type', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Type"})
 
 
 class RouteForm(FlaskForm):
@@ -61,7 +63,6 @@ class RouteForm(FlaskForm):
 
 
 class CentreForm(FlaskForm):
-    code = StringField('Centre Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Centre Code"})
     name = StringField('Centre Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Centre Name"})
     route = SelectField('Route:', validators=[Required()], id='select_route',  coerce=int)
 
