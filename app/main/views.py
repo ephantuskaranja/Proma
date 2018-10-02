@@ -336,8 +336,7 @@ def new_grader():
         grader = AppUser(
                 first_name=form.first_name.data, 
                 last_name=form.last_name.data, 
-                phone_number=form.phone_number.data, 
-                contract_price=form.contract_price.data, 
+                phone_number=form.phone_number.data,  
                 username=form.app_username.data, 
                 app_password=form.app_password.data, 
                 creator=current_user,
@@ -359,7 +358,6 @@ def edit_grader(id):
     form.first_name.data = grader.first_name
     form.last_name.data = grader.last_name
     form.phone_number.data = grader.phone_number
-    form.contract_price.data = grader.contract_price
     form.app_username.data = grader.username
     form.app_password.data = grader.app_password
     form.role.choices = [(row.id, row.name) for row in Role.query.all()]
@@ -367,7 +365,6 @@ def edit_grader(id):
         grader.first_name = request.form.get('first_name')
         grader.last_name = request.form.get('last_name')
         grader.phone_number = request.form.get('phone_number')
-        grader.contract_price = request.form.get('contract_price')
         grader.username = request.form.get('app_username')
         grader.app_password = request.form.get('app_password')
         grader.role_id = request.form.get('role')

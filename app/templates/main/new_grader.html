@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-	New Motor Vehicle
+	New Grader/Clerk
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
                 <div class="x_panel">
                   
                   <div class="x_title">
-                    <h2>New App User<small> Create new App User/Grader</small></h2>
+                    <h2>New Grader/Clerk<small> Create new Grader/Clerk </small></h2>
                     <a href="{{url_for('main.graders')}}" class="btn btn-primary pull-right"><i class="fa fa-history"></i> Back </a>
                     <div class="clearfix"></div>
                   </div>
@@ -60,17 +60,7 @@
                       </div>
                     </div>
 
-                     <div class="form-group {% if form.contract_price.errors %} has-error {% endif %}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-make">{{ form.contract_price.label }} <span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                         {{ form.contract_price(class_="form-control col-md-7 col-xs-12") }}
-                         {% if form.contract_price.errors %}
-                            <span class="help-block"></span>
-                            <span id="helpBlock2" class="help-block">{{ form.contract_price.errors[0] }}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-
+                     
                     <div class="form-group {% if form.app_username.errors %} has-error {% endif %}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-app_username">{{ form.app_username.label }} <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">

@@ -99,7 +99,6 @@ class GraderForm(FlaskForm):
     first_name = StringField('First Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "First Name"})
     last_name = StringField('Last Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Last Name"})
     phone_number = StringField('Phone Number', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Phone Number"})
-    contract_price = StringField('Contarct Price', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Contract Price"})
     app_username = StringField('App Username', validators=[Required(), Length(1,64)], render_kw={"placeholder": "App Username"})
     app_password = StringField('App Password', validators=[Required(), Length(1,64)], render_kw={"placeholder": "App Password"})
     role = SelectField('Role:', validators=[Required()], id='select Role',  coerce=int)

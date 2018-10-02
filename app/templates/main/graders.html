@@ -21,7 +21,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Transporters Registry</h2>
+                    <h2>Graders/Clerks Registry</h2>
                     <a href="{{url_for('main.new_grader')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> New Transporter</a>
                     <div class="clearfix"></div>
                   </div>
@@ -71,9 +71,9 @@
                           <td>{{obj.phone_number}}</td>
                         <!--   <td>{{obj.contract_price}}</td> -->
                           {% if obj.role_id == 1 %}
-                            <td>Administrator</td>
-                            {% elif  obj.role_id == 2 %}
                             <td>Grader/Clerk</td>
+                            {% elif  obj.role_id == 2 %}
+                            <td>Administrator</td>
                           {% endif %}
                           <td>{{obj.draft_date}}</td>
                           <td>{{obj.creator}}</td>
