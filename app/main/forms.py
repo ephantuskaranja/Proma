@@ -51,11 +51,11 @@ class GroupForm(FlaskForm):
 class ProcessorForm(FlaskForm):
     code = StringField('Processor Code', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Code"})
     name = StringField('Processor Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Name"})
-    type = StringField('Processor Type', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Processor Type"})
+    type = SelectField(u'Processor Type', choices=[('Miller', 'MILLER'), ('Dealer', 'DEALER')])
 
 
 class RouteForm(FlaskForm):
-    name = StringField('Route Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route Name"})
+    name = StringField('Route Name', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route/Centre name"})
     start = StringField('Route Start', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route start-point"})
     end = StringField('Route End', validators=[Required(), Length(1,64)], render_kw={"placeholder": "Route end-point"})
 

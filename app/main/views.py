@@ -535,20 +535,21 @@ def cumm_farmer():
 
     data = db.session.query(TripPayment.farmer_id, func.sum(TripPayment.net ).label('net'), func.sum(TripPayment.net * 0.75).label('farmer_loan_amount')).filter(TripPayment.status == 'NOT PAID' ).group_by(TripPayment.farmer_id).all()
     
+    colls=Collection.query.all()
 
-
-    return render_template('main/farmer_cumm.html', data=data, start_date= start_date)
+    return render_template('main/farmer_cumm.html', data=data, colls=colls, start_date= start_date)
 
 
 
 @main.route('/loan-limit', methods=['GET', 'POST'])
 @login_required
 def loan_limit():
+    form = LimitForm
    
     
 
 
-    return render_template('main/farmer_cumm.html')
+    return render_template('main/new_limit.html', form=form)
 
 
 
@@ -851,10 +852,11 @@ def generate_grader_payment():
 @main.route('/collections')
 @login_required
 def collections():
+    today=date.today()
     total_collection = db.session.query(db.func.sum(Collection.produce_weight))
     # #Collection.query(db.func.count(Collection.produce_weight))
-    collections = Collection.query.all()
-    return render_template('main/collections.html', collections=collections, total_collection=total_collection)
+    collections = Collection.query.filter_by()
+    return render_template('main/collections.html', today=today, collections=collections, total_collection=total_collection)
 
 
 

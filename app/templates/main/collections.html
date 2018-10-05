@@ -23,8 +23,16 @@
                   <div class="x_title">
                     <h2>Collections Registry</h2>
                     {# <a href="{{url_for('main.new_farmer')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> New Farmer</a> #}
-
+                    {% for c in collections %}
+                    
+                    {% endfor %}
+                    <div class="div">
+                      <h2>| {{today}}</h2>
+                      
+                    </div>
+                   
                     <h3 class="pull-right">Today's Total Collection : {{'%0.2f' % total_collection |float}}</h3>
+                    
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">

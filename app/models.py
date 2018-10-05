@@ -570,6 +570,7 @@ class Collection(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('app_users.id'))
     centre_id = db.Column(db.Integer, db.ForeignKey('collection_centres.id'))
     farmer_id = db.Column(db.Integer, db.ForeignKey('farmers.id'))
+
     produce_id = db.Column(db.Integer, db.ForeignKey('produce.id'))
     # contract_id = db.Column(db.Integer, db.ForeignKey('contracts.id'))
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
